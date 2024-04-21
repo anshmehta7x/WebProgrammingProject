@@ -64,7 +64,7 @@ app.get("/doctors", async (req, res) => {
 });
 
 app.post("/doctors", async (req, res) => {
-  const { name, specialty, location, rating } = req.body;
+  const { name, specialty, location, rating, phoneNumber } = req.body;
   if (!name || !specialty || !location || !rating) {
     return res
       .status(400)

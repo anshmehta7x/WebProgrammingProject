@@ -7,6 +7,7 @@ export default function AddDoctorPopup({ showPopup, setShowPopup }) {
   const [specialty, setSpecialty] = useState("");
   const [location, setLocation] = useState("");
   const [rating, setRating] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +17,7 @@ export default function AddDoctorPopup({ showPopup, setShowPopup }) {
         specialty: specialty,
         location: location,
         rating: rating,
+        phoneNumber: phoneNumber,
       })
       .then(() => {
         setShowPopup(false);
@@ -23,6 +25,7 @@ export default function AddDoctorPopup({ showPopup, setShowPopup }) {
         setSpecialty("");
         setLocation("");
         setRating("");
+        setPhoneNumber("");
       })
       .catch((error) => {
         console.error(error);
@@ -67,6 +70,14 @@ export default function AddDoctorPopup({ showPopup, setShowPopup }) {
                 type="text"
                 value={rating}
                 onChange={(event) => setRating(event.target.value)}
+              />
+            </label>
+            <label>
+              Phone Number:
+              <input
+                type="text"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
               />
             </label>
             <button className="submit-doctor-button" type="submit">
