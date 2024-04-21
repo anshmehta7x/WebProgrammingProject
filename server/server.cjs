@@ -1,65 +1,40 @@
-// Import required modules
+/* eslint-disable no-undef */
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-// Initialize Express app
 const app = express();
-
-// Middleware
 app.use(bodyParser.json());
-app.use(cors()); // Use cors middleware to allow cross-origin requests
-// Routes
+app.use(cors());
 
-// Get all items
-app.get("/items", (req, res) => {
-  res.json(items);
+const mongo_url = process.env.MONGO_URL;
+console.log(mongo_url);
+
+const testimonialsSchema = new mongoose.Schema({
+  name: String,
+  text: String,
 });
 
-// Get single item by id
-app.get("/items/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const item = items.find((item) => item.id === id);
-  if (!item) {
-    return res.status(404).json({ message: "Item not found" });
+const Testimonial = mongoose.model("Testimonials", testimonialsSchema);
+
+app.get("/testimonials", async (req, res) => {
+  try {
+    const items = await Testimonial.find({}).exec();
+    res.json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  res.json(item);
 });
 
-// Create new item
-app.post("/items", (req, res) => {
-  const newItem = req.body;
-  newItem.id = items.length + 1;
-  items.push(newItem);
-  res.status(201).json(newItem);
-});
+async function dbConnect() {
+  await mongoose.connect(mongo_url);
+}
 
-// Update item by id
-app.put("/items/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const updatedItem = req.body;
-  const index = items.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ message: "Item not found" });
-  }
-  items[index] = { ...items[index], ...updatedItem };
-  res.json(items[index]);
-});
-
-// Delete item by id
-app.delete("/items/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = items.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ message: "Item not found" });
-  }
-  items.splice(index, 1);
-  res.sendStatus(204);
-});
-
-// Start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
+  dbConnect();
   console.log(`Server is running on port ${port}`);
 });
