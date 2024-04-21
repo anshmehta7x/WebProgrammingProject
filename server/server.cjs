@@ -29,6 +29,21 @@ app.get("/testimonials", async (req, res) => {
   }
 });
 
+app.post("/testimonials", async (req, res) => {
+  const { name, text } = req.body;
+  if (!name || !text) {
+    return res.status(400).json({ error: "Name and text are required" });
+  }
+  try {
+    const newItem = new Testimonial({ name, text });
+    await newItem.save();
+    res.json(newItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 async function dbConnect() {
   await mongoose.connect(mongo_url);
 }
