@@ -17,6 +17,15 @@ const testimonialsSchema = new mongoose.Schema({
   text: String,
 });
 
+const doctorSchema = new mongoose.Schema({
+  name: String,
+  specialty: String,
+  location: String,
+  rating: String,
+  phoneNumber: String,
+});
+
+const Doctor = mongoose.model("Doctors", doctorSchema);
 const Testimonial = mongoose.model("Testimonials", testimonialsSchema);
 
 app.get("/testimonials", async (req, res) => {
@@ -36,6 +45,39 @@ app.post("/testimonials", async (req, res) => {
   }
   try {
     const newItem = new Testimonial({ name, text });
+    await newItem.save();
+    res.json(newItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/doctors", async (req, res) => {
+  try {
+    const items = await Doctor.find({}).sort({ createdAt: 1 }).exec();
+    res.json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/doctors", async (req, res) => {
+  const { name, specialty, location, rating } = req.body;
+  if (!name || !specialty || !location || !rating) {
+    return res
+      .status(400)
+      .json({ error: "Name, specialty, location, and rating are required" });
+  }
+  try {
+    const newItem = new Doctor({
+      name,
+      specialty,
+      location,
+      rating,
+      phoneNumber,
+    });
     await newItem.save();
     res.json(newItem);
   } catch (err) {
