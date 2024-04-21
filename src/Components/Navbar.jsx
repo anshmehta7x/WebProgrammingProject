@@ -4,9 +4,16 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">
-        Med<em>Search</em>
-      </div>
+      <NavLink
+        to="/"
+        className="logo-button"
+        activeClassName="active-link"
+        exact
+      >
+        <div className="logo">
+          Med<em>Search</em>
+        </div>
+      </NavLink>
       <div className="nav-buttons">
         <NavLink
           to="/testimonials"

@@ -1,7 +1,7 @@
-import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Navbar from "./Components/Navbar";
 
-export default function Find() {
+export default function About() {
   return (
     <>
       <Navbar />
