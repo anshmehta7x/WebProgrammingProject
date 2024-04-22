@@ -1,10 +1,26 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import "./Dashboard.css";
-import Find from "./Find";
 import Footer from "./Components/Footer";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
+  const images = [
+    "/carousel/doc1.png",
+    "/carousel/doc2.png",
+    "/carousel/doc3.png",
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((currentImageIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(timer); // Clean up on component unmount
+  }, [currentImageIndex, images.length]);
+
   return (
     <>
       <Navbar />
@@ -27,7 +43,7 @@ function Dashboard() {
         </section>
         <section className="image-section">
           <img
-            src="/doctor-graphic.png"
+            src={images[currentImageIndex]}
             alt="doctor"
             className="doctor-graphic"
           />

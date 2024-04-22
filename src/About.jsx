@@ -17,7 +17,6 @@ export default function About() {
               find and learn about medical doctors and healthcare providers in
               their local area.
             </p>
-            >
           </div>
         </section>
         <section>
