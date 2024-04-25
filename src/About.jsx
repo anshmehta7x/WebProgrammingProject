@@ -9,7 +9,7 @@ export default function About() {
       <main className="main-container">
         <section>
           <div>
-            <img src="/public/doctor-with-stethoscope.jpg"></img>
+            <img src="/doctor-with-stethoscope.jpg"></img>
           </div>
           <div>
             <p>
