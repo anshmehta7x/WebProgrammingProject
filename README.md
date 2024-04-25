@@ -3,7 +3,7 @@
 Create a web project using react, express, and mongoDB for course BCSE203E (Web Programming). The project should have the following features:
 
 - 2 dynamic pages linked to the database
-- 1 static Page
+- 3 static pages
 
 # MedSearch
 
